@@ -1,16 +1,30 @@
 <div class="container">
   <div class="wrapper">
     <div class="title"><span>Login</span></div>
-    <form>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="row">
-        <input type="text" placeholder="Email" required />
+        <input
+          type="text"
+          placeholder="Email"
+          required
+          formControlName="email"
+        />
       </div>
       <div class="row">
-        <input class="row" type="password" placeholder="Password" required />
+        <input
+          class="row"
+          type="password"
+          placeholder="Password"
+          required
+          formControlName="password"
+        />
       </div>
       <div class="row button">
         <button class="btn-stylized" type="submit">Submit</button>
       </div>
+      @if(errorMessage){
+      <div class="error">{{ errorMessage }}</div>
+      }
       <div class="signup-link">
         Not a member? <a routerLink="/register">Sigup now</a>
       </div>

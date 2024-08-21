@@ -11,12 +11,23 @@
           <li class="nav__item">
             <a class="nav__link">Post By Category</a>
           </li>
+          @if (authService.currentUser()) {
           <li class="nav__item">
-            <a class="nav__link">Add Post</a>
+            <a class="nav__link" routerLink="/addpost">Add Post</a>
           </li>
           <li>
-            <a routerLink="/register" class="btn-stylized">signup</a>
+            <a (click)="logout()" routerLink="/login" class="btn-stylized out"
+              >Sign out</a
+            >
           </li>
+          }@else {
+          <li class="nav__item">
+            <a class="nav__link" routerLink="/login">Add Post</a>
+          </li>
+          <li>
+            <a routerLink="/login" class="btn-stylized">Sign in</a>
+          </li>
+          }
         </ul>
       </nav>
       <div class="hamburger">

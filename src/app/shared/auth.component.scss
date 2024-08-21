@@ -28,6 +28,10 @@
   margin-bottom: 15px;
   position: relative;
 }
+.wrapper form .button {
+  margin-bottom: 0;
+  height: auto;
+}
 .wrapper form .row input {
   height: 100%;
   width: 100%;
@@ -61,16 +65,21 @@ form .row input::placeholder {
     background-color: #0d6a58;
   }
 }
-
 .wrapper form .signup-link {
   text-align: center;
-  margin-top: 20px;
-  font-size: 17px;
+  font-size: 15px;
+  margin-top: 15px;
 }
 .wrapper form .signup-link a {
-  color: #16a085;
+  color: #0a7fc2;
   text-decoration: none;
 }
 form .signup-link a:hover {
   text-decoration: underline;
+}
+
+.error {
+  color: red;
+  padding: 4px;
+  margin: 10px 0;
 }
