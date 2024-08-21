@@ -1,0 +1,214 @@
+.header {
+  button {
+    background: 0 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  a {
+    all: unset;
+    font-size: 0.8rem;
+  }
+
+  .icon {
+    color: rgba(255, 255, 255, 0.17);
+    font-size: 0.8rem;
+  }
+
+  .bottom-bar__content {
+    min-height: 60px;
+    max-width: 1200px;
+    padding: 0 30px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bottom-bar__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+
+    div {
+      color: #fff;
+
+      p:nth-child(1) {
+        font-weight: 400;
+      }
+
+      p:nth-child(2) {
+        font-weight: 200;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 4.2px;
+      }
+    }
+  }
+
+  .nav {
+    transition: all 0.3s ease-in-out;
+
+    &__list {
+      display: flex;
+      column-gap: 40px;
+
+      .nav__item {
+        .nav__link {
+          cursor: pointer;
+          font-weight: 510;
+          font-size: 14px;
+          line-height: 17px;
+          color: #1d1d1d;
+          transition: color ease 0.3s;
+
+          &:after {
+            content: " ";
+            position: relative;
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            margin-left: 8px;
+            background: url("https://www.oppa.ge/images/arrow_black.svg?2c597085b765b440b2e92c8e22146b63")
+              no-repeat;
+            transition: all 0.5s;
+          }
+
+          &:focus,
+          &:hover {
+            color: #707070;
+
+            &:after {
+              transform: rotate(90deg);
+            }
+          }
+
+          &.active {
+            color: #707070;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+
+  .btn-stylized {
+    color: #fff;
+    background-color: #198754;
+    padding: 8px 20px;
+    border-radius: 1000px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #157347;
+    }
+  }
+
+  .hamburger {
+    cursor: pointer;
+    display: none;
+
+    .bar {
+      height: 3px;
+      width: 25px;
+      border-radius: 20px;
+      background-color: #1d1d1d;
+      margin: 5px 0;
+      opacity: 0.8;
+      transition: all 0.3s ease-in-out;
+    }
+
+    &--open {
+      .bar:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+
+      .bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      .bar:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+    }
+  }
+
+  .nav--open {
+    left: 50% !important;
+  }
+
+  @media (max-width: 750px) {
+    .nav {
+      position: fixed;
+      top: 90px;
+      left: -100%;
+      transform: translateX(-50%);
+      background-color: #13161a;
+      width: 100%;
+      padding: 10px 0 25px;
+
+      &__list {
+        flex-direction: column;
+        align-items: center;
+        row-gap: 20px;
+      }
+
+      .nav__link {
+        font-size: 14px;
+      }
+    }
+
+    .btn {
+      font-size: 11px;
+      padding: 7px 17px;
+    }
+
+    .hamburger {
+      display: block;
+    }
+
+    .bottom-bar__logo {
+      div {
+        p:nth-child(1) {
+          font-weight: 300;
+          font-size: 0.9rem;
+        }
+
+        p:nth-child(2) {
+          font-size: 0.6rem;
+          letter-spacing: 5px;
+        }
+      }
+    }
+
+    .icon,
+    a {
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .bottom-bar__logo {
+      div {
+        p:nth-child(1) {
+          font-size: 0.8rem;
+        }
+
+        p:nth-child(2) {
+          font-size: 0.6rem;
+          letter-spacing: 3.3px;
+        }
+      }
+    }
+  }
+}
