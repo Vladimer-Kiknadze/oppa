@@ -6,15 +6,17 @@ import {
   collectionData,
 } from '@angular/fire/firestore';
 import { Blog } from '../interfaces/blog.interface';
-import { Observable, first, from, of, switchMap } from 'rxjs';
+import { Observable, catchError, first, from, of, switchMap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BlogService {
   fireBase = inject(Firestore);
+  httpClient = inject(HttpClient);
   blogsCollection = collection(this.fireBase, 'blogs');
-  allBlog = signal<Blog[]>([]);
+  allBlogs = signal<Blog[]>([]);
   postDetail = signal<Blog | null>(null);
 
   getBlogs(): Observable<Blog[]> {
@@ -24,19 +26,19 @@ export class BlogService {
   }
 
   getPostDetail(id: string): void {
-    if (this.allBlog().length === 0) {
+    if (this.allBlogs().length === 0) {
       this.getBlogs()
         .pipe(
           first(),
           switchMap((blogs) => {
-            this.allBlog.set(blogs);
+            this.allBlogs.set(blogs);
             const blog = blogs.find((blog) => id === blog.id) || null;
             return of(blog);
           })
         )
         .subscribe((blog) => this.postDetail.set(blog));
     } else {
-      const blog = this.allBlog().find((blog) => id === blog.id) || null;
+      const blog = this.allBlogs().find((blog) => id === blog.id) || null;
       this.postDetail.set(blog);
     }
   }
@@ -49,22 +51,21 @@ export class BlogService {
     category: string
   ): Observable<string> {
     if (image && !this.isValidImageUrl(image)) {
-      console.error('Invalid image URL');
       return of('Invalid image URL');
     }
 
-    const blogCreate = {
-      title,
-      description,
-      image: image || null,
-      author,
-      category,
-      date: new Date().toDateString(),
-    };
-    const promise = addDoc(this.blogsCollection, blogCreate).then(
-      (response) => response.id
-    );
-    return from(promise);
+    if (image) {
+      return this.isImageAccessible(image).pipe(
+        switchMap((isAccessible) => {
+          if (!isAccessible) {
+            return of('Invalid image URL');
+          }
+          return this.saveBlog(title, description, image, author, category);
+        })
+      );
+    } else {
+      return this.saveBlog(title, description, image, author, category);
+    }
   }
 
   addBLOG(
@@ -75,16 +76,16 @@ export class BlogService {
     category: string,
     id: string
   ): void {
-    const newBlog: any = {
+    const newBlog: Blog = {
       title,
       description,
       image,
       category,
       author,
-      date: new Date(),
+      date: new Date().toDateString(),
       id,
     };
-    this.allBlog.update((blogs) => [...blogs, newBlog]);
+    this.allBlogs.update((blogs) => [...blogs, newBlog]);
   }
 
   private isValidImageUrl(url: string): boolean {
@@ -102,14 +103,37 @@ export class BlogService {
       return false;
     }
 
-    const imageKeywords = ['image', 'img', 'photo', 'pic', 'thumbnail'];
-    if (imageKeywords.some((keyword) => url.includes(keyword))) {
-      return true;
-    }
-
     const extensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
     return extensions.some((extension) =>
       url.toLowerCase().endsWith(`.${extension}`)
     );
+  }
+
+  private isImageAccessible(url: string): Observable<boolean> {
+    return this.httpClient.head(url, { observe: 'response' }).pipe(
+      switchMap((response) => of(response.status === 200)),
+      catchError(() => of(false))
+    );
+  }
+
+  private saveBlog(
+    title: string,
+    description: string,
+    image: string | null,
+    author: string,
+    category: string
+  ): Observable<string> {
+    const blogCreate = {
+      title,
+      description,
+      image: image || null,
+      author,
+      category,
+      date: new Date().toDateString(),
+    };
+    const promise = addDoc(this.blogsCollection, blogCreate).then(
+      (response) => response.id
+    );
+    return from(promise);
   }
 }

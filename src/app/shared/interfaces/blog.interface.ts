@@ -3,13 +3,7 @@ export interface Blog {
   description: string;
   author: string;
   date: string;
-  category: Category;
+  category: string;
   image: string;
   id: string;
-}
-
-export interface Category {
-  payment: string;
-  crypto: string;
-  development: string;
 }

@@ -2,6 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: var(--bs-body-font-family);
 }
 
 :root {
@@ -11,8 +12,4 @@
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
   --bs-body-font-family: var(--bs-font-sans-serif);
-}
-
-body {
-  font-family: var(--bs-body-font-family);
 }

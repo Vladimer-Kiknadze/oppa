@@ -8,28 +8,50 @@
     border-radius: 10px;
   }
 
-  .post-header {
-    margin-bottom: 30px;
+  .categoryList {
+    overflow: hidden;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #e2e2e2;
 
-    .post-title {
-      font-size: 36px;
-      font-weight: 700;
-      color: #1d1d1d;
-      margin-bottom: 10px;
-    }
+    ul {
+      list-style: none;
+      padding: 0px;
+      margin: 0px;
 
-    .post-meta {
-      display: flex;
-      gap: 20px;
-      font-size: 14px;
-      color: #707070;
+      li {
+        margin-bottom: 15px;
+        margin-right: 24px;
 
-      .post-author {
-        font-weight: 500;
-      }
+        a {
+          display: block;
+          transition: 0.5s all;
+          background: #e2e2e2;
+          border-radius: 30px;
+          font-family: "FiraGO-Regular" !important;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 17px;
+          letter-spacing: 0.04em;
+          color: #000;
+          padding: 10px 24px;
+          margin-left: 15px;
+        }
 
-      .post-date {
-        font-weight: 400;
+        .post-title {
+          font-size: 36px;
+          font-weight: 700;
+          color: #1d1d1d;
+          margin-bottom: 10px;
+        }
+
+        .post-author {
+          font-weight: 500;
+        }
+
+        .post-date {
+          font-weight: 400;
+        }
       }
     }
   }
@@ -63,47 +85,4 @@
       margin-bottom: 20px;
     }
   }
-}
-
-.categoryList {
-  overflow: hidden;
-  margin-bottom: 50px;
-  border-bottom: 1px solid #e2e2e2;
-}
-
-.categoryList ul {
-  list-style: none;
-  padding: 0px;
-  margin: 0px;
-}
-
-.categoryList ul li {
-  margin-bottom: 15px;
-  margin-right: 24px;
-}
-
-.categoryList ul li:last-child {
-  margin-right: 0px;
-}
-
-.categoryList ul li.active a,
-.categoryList ul li:hover a {
-  background: #000;
-  color: #fff;
-}
-
-.categoryList ul li a {
-  display: block;
-  transition: 0.5s all;
-  background: #e2e2e2;
-  border-radius: 30px;
-  font-family: "FiraGO-Regular" !important;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 0.04em;
-  color: #000;
-  padding: 10px 24px;
-  margin-left: 15px;
 }

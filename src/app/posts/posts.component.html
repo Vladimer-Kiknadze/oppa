@@ -10,7 +10,7 @@
         </div>
         <div class="newsList">
           <div class="row filter_content">
-            @if (blogService.allBlog()) { @for (blog of blogService.allBlog();
+            @if (blogService.allBlogs()) { @for (blog of blogService.allBlogs();
             track blog.id) {
             <a [routerLink]="['', 'posts', blog.id]">
               <div class="col-md-4">

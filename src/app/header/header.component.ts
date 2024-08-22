@@ -1,8 +1,8 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { User } from '@angular/fire/auth';
+import { AuthService } from '../shared/services/auth.service';
 import { CommonModule } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
+  private destroy$ = new Subject<void>();
   authService = inject(AuthService);
   isMenuOpen = false;
   isAuthLoaded = signal(false);
@@ -21,17 +22,20 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.user$.subscribe((user: User | null) => {
-      if (user) {
-        this.authService.currentUser.set({
-          email: user.email!,
-          username: user.displayName!,
-        });
-      } else {
-        this.authService.currentUser.set(null);
-      }
-      this.isAuthLoaded.set(true);
-    });
+    this.authService
+      .getCurrentUser()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user) => {
+        if (user) {
+          this.authService.currentUser.set({
+            email: user.email!,
+            username: user.displayName!,
+          });
+        } else {
+          this.authService.currentUser.set(null);
+        }
+        this.isAuthLoaded.set(true);
+      });
   }
 
   logout() {
@@ -39,5 +43,10 @@ export class HeaderComponent implements OnInit {
       this.isMenuOpen = false;
       this.authService.currentUser.set(null);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

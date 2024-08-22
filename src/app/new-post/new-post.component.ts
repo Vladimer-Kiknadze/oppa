@@ -6,8 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { BlogService } from '../services/blog.service';
-import { AuthService } from '../services/auth.service';
+import { BlogService } from '../shared/services/blog.service';
+import { AuthService } from '../shared/services/auth.service';
 import { User } from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../shared/spinner/spinner.component';
@@ -16,10 +16,10 @@ import { SpinnerComponent } from '../shared/spinner/spinner.component';
   selector: 'app-newpost',
   standalone: true,
   imports: [RouterLink, ReactiveFormsModule, CommonModule, SpinnerComponent],
-  templateUrl: './newpost.component.html',
-  styleUrl: './newpost.component.scss',
+  templateUrl: './new-post.component.html',
+  styleUrl: './new-post.component.scss',
 })
-export class NewpostComponent implements OnInit {
+export class NewPostComponent implements OnInit {
   blogsService = inject(BlogService);
   authService = inject(AuthService);
   fb = inject(FormBuilder);

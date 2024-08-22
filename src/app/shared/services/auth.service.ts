@@ -1,13 +1,14 @@
 import { Injectable, inject, signal } from '@angular/core';
 import {
   Auth,
+  User,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
   user,
 } from '@angular/fire/auth';
-import { Observable, from } from 'rxjs';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
 
 @Injectable({
@@ -17,6 +18,19 @@ export class AuthService {
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
   currentUser = signal<UserInterface | null | undefined>(undefined);
+  private auth = inject(Auth);
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
+
+  constructor() {
+    this.auth.onAuthStateChanged((user) => {
+      this.currentUserSubject.next(user);
+    });
+  }
+
+  getCurrentUser(): Observable<User | null> {
+    return this.currentUser$;
+  }
 
   register(
     email: string,
@@ -46,11 +60,20 @@ export class AuthService {
   }
 
   logout(): Observable<void> {
-    const promise = signOut(this.firebaseAuth);
-    return from(promise);
+    return new Observable<void>((observer) => {
+      this.auth.signOut().then(
+        () => {
+          this.currentUserSubject.next(null);
+          observer.next();
+          observer.complete();
+        },
+        (error) => {
+          observer.error(error);
+        }
+      );
+    });
   }
-
-  private setCurrentUser(user: any): void {
+  private setCurrentUser(user: User): void {
     if (user) {
       this.currentUser.set({
         email: user.email!,

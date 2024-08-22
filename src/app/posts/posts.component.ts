@@ -1,24 +1,24 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { BlogService } from '../services/blog.service';
+import { BlogService } from '../shared/services/blog.service';
 import { SpinnerComponent } from '../shared/spinner/spinner.component';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-blogs',
+  selector: 'app-posts',
   standalone: true,
   imports: [SpinnerComponent, RouterLink, CommonModule],
-  templateUrl: './blogs.component.html',
-  styleUrl: './blogs.component.scss',
+  templateUrl: './posts.component.html',
+  styleUrl: './posts.component.scss',
 })
-export class BlogsComponent implements OnInit {
+export class PostsComponent implements OnInit {
   blogService = inject(BlogService);
   isLoading = signal(true);
 
   ngOnInit(): void {
     this.blogService.getBlogs().subscribe(
       (blogs) => {
-        this.blogService.allBlog.set(blogs);
+        this.blogService.allBlogs.set(blogs);
         this.isLoading.set(false);
       },
       (error) => {
