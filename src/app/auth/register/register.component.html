@@ -5,7 +5,7 @@
       <div class="row">
         <input
           type="text"
-          placeholder="Username "
+          placeholder="Username"
           required
           formControlName="username"
         />
@@ -28,13 +28,16 @@
         />
       </div>
       <div class="row button">
-        <button class="btn-stylized" type="submit">Submit</button>
+        <button class="btn-stylized" type="submit" [disabled]="isLoading">
+          Submit
+        </button>
       </div>
-      @if(errorMessage){
+      <app-spinner *ngIf="isLoading"></app-spinner>
+      @if (errorMessage) {
       <div class="error">{{ errorMessage }}</div>
       }
       <div class="signup-link">
-        Are you a member? <a routerLink="/login">Sigin now</a>
+        Are you a member? <a routerLink="/login">Sign in now</a>
       </div>
     </form>
   </div>

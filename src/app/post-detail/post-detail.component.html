@@ -1,0 +1,50 @@
+<div class="container post-detail">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="post-block">
+        <div *ngIf="blogService.postDetail(); else loading">
+          <div class="categoryList">
+            <ul>
+              <li class="active">
+                <h2 class="post-title">
+                  {{ blogService.postDetail()?.title }}
+                </h2>
+              </li>
+              <li>
+                <span class="post-author"
+                  >Author: {{ blogService.postDetail()?.author }}</span
+                >
+              </li>
+              <li>
+                <span class="post-date"
+                  >Published on: {{ blogService.postDetail()?.date }}</span
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="post-detail-content">
+            <div class="post-image">
+              <img
+                *ngIf="blogService.postDetail()?.image; else defaultImage"
+                [src]="blogService.postDetail()?.image"
+                alt="blog-image"
+              />
+              <ng-template #defaultImage>
+                <img
+                  src="https://mailrelay.com/wp-content/uploads/2018/03/que-es-un-blog-1.png"
+                  alt="default-blog-image"
+                />
+              </ng-template>
+            </div>
+            <div class="post-description">
+              <p>{{ blogService.postDetail()?.description }}</p>
+            </div>
+          </div>
+        </div>
+        <ng-template #loading>
+          <app-spinner></app-spinner>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

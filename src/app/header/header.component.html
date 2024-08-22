@@ -6,31 +6,29 @@
           <img class="logo__img" src="oppa-logo.png" alt="oppa-logo" />
         </a>
       </div>
-      <nav class="nav">
+      <nav [ngClass]="{ 'nav--open': isMenuOpen }" class="nav">
         <ul class="nav__list">
           <li class="nav__item">
-            <a class="nav__link">Post By Category</a>
+            <a class="nav__link" routerLink="/newpost">Add Post</a>
           </li>
-          @if (authService.currentUser()) {
-          <li class="nav__item">
-            <a class="nav__link" routerLink="/addpost">Add Post</a>
+          <li *ngIf="isAuthLoaded(); else loading">
+            <ng-container *ngIf="authService.currentUser(); else signIn">
+              <a (click)="logout()" class="btn-stylized out">Sign out</a>
+            </ng-container>
+            <ng-template #signIn>
+              <a routerLink="/login" class="btn-stylized">Sign in</a>
+            </ng-template>
           </li>
-          <li>
-            <a (click)="logout()" routerLink="/login" class="btn-stylized out"
-              >Sign out</a
-            >
-          </li>
-          }@else {
-          <li class="nav__item">
-            <a class="nav__link" routerLink="/login">Add Post</a>
-          </li>
-          <li>
-            <a routerLink="/login" class="btn-stylized">Sign in</a>
-          </li>
-          }
+          <ng-template #loading>
+            <i class="fa-solid fa-user"></i>
+          </ng-template>
         </ul>
       </nav>
-      <div class="hamburger">
+      <div
+        class="hamburger"
+        [ngClass]="{ 'hamburger--open': isMenuOpen }"
+        (click)="toggleMenu()"
+      >
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
