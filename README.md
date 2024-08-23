@@ -1,5 +1,7 @@
 # OppaTask
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.0.
+# back-end ისთვის გამოყენებული მაქვს firebase. საწყის გვერდზე ჩანს ყველა პოსტი და თითოეულ პოსტზე დაკლიკებით გადადიხარ post detail გვერდზე პოსტის აიდის მეშვეობით და დაგხვდება დეტალური ინფორმაცია ამ პოსტზე.
+
+# შეუძლია იუზერს როგორც ანონიმურად , ისე თავისი სახელი და გვარით დაამატოს ახალი პოსტი (ავტორიზაციის გავლით).
 
 # live : https://oppatask.netlify.app

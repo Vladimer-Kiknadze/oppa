@@ -11,11 +11,6 @@
           <li class="nav__item">
             <a class="nav__link" routerLink="/newpost">Add Post</a>
           </li>
-          <li class="nav__item">
-            <a class="nav__link" [routerLink]="['', 'category']"
-              >Post by category</a
-            >
-          </li>
           <li *ngIf="isAuthLoaded(); else loading">
             <ng-container *ngIf="authService.currentUser(); else signIn">
               <a (click)="logout()" class="btn-stylized out">Sign out</a>
